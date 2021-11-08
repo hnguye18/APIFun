@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>API Fun</title>
+</head>
+
+<body>
+    <div id = "main"></div>
+    <script>
+        var request  = new XMLHttpRequest();
+        request.open('GET', 'https://api.punkapi.com/v2/beers', true);
+        
+        request.onload = function () {
+            var data = JSON.parse(this.response);
+            var str = "";
+            for (i = 0; i < 25; i++) {
+                str += ("Drink Name: " + data[i].name + "<br>Tagline: " + data[i].tagline + "<br>");
+                str += ("First brewed: " + data[i].first_brewed + "<br>Description: " + data[i].description + "<br>");
+                str += "Food pairings: ";
+                for (j = 0; j < data[i].food_pairing.length; j++) {
+                    if (j == data[i].food_pairing.length - 1) {
+                        str += (data[i].food_pairing[j]);
+                    } else {
+                        str += (data[i].food_pairing[j] + ", ");
+                    }
+                }
+                str += "<br><br>"
+            }
+            document.getElementById("main").innerHTML = str;
+        }
+        request.send();
+    </script>
+</body>
+</html>
